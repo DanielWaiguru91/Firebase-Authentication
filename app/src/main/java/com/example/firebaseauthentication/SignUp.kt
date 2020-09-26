@@ -1,20 +1,11 @@
 package com.example.firebaseauthentication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.util.Patterns
-import android.widget.EditText
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
-import kotlinx.android.synthetic.main.activity_sign_up.emailEditText
-import kotlinx.android.synthetic.main.activity_sign_up.passwordEditText
 
 class SignUp : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
@@ -22,34 +13,45 @@ class SignUp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         auth = FirebaseAuth.getInstance()
-        txtSignIn.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        }
-        btn_SignUp.setOnClickListener {
-            userSignUpValidate()
-        }
+        initListeners()
+    }
+    private fun initListeners() {
+        registerButton.setOnClickListener { signUp() }
     }
     private fun signUp(){
-        
-        if (emailEditText.text.toString().isEmpty()){
+        val email = emailEditText.text.toString()
+        val password = passwordEditText.text.toString()
+        val cPassword = cPasswordEditText.text.toString()
+        if (email.isEmpty()){
             emailEditText.error = getString(R.string.email_error)
             emailEditText.requestFocus()
             return
         }
-        if (passwordEditText.text.toString().isEmpty()){
+        if (password.isEmpty()){
             passwordEditText.error = getString(R.string.password_error)
             passwordEditText.requestFocus()
             return
         }
-        if (cPasswordEditText.text.toString().isEmpty()){
+        if (cPassword.isEmpty()){
             cPasswordEditText.error = getString(R.string.not_match_error)
             cPasswordEditText.requestFocus()
             return
-        } else if (cPasswordEditText.text.toString() != passwordEditText.text.toString()){
+        } else if (cPassword != password){
             cPasswordEditText.error = getString(R.string.not_match_error)
+            return
         }
-
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                Toast.makeText(this, getString(R.string.success), Toast.LENGTH_SHORT).show()
+                initUi()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, getString(R.string.failure), Toast.LENGTH_SHORT).show()
+            }
     }
-
+    private fun initUi(){
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+    }
 }

@@ -10,4 +10,9 @@
     <string name="email_error">Email is required</string>
     <string name="password_error">Password is Required</string>
     <string name="not_match_error">Password Do Not Match</string>
+    <string name="failure">Failure</string>
+    <string name="success">Success</string>
+    <string name="email">Email</string>
+    <string name="proceed">Continue</string>
+    <string name="join">New User? Join</string>
 </resources>
