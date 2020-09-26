@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     }
     override fun onStart() {
         super.onStart()
+        loggedInStatus()
     }
     private fun signIn() {
         val email = emailEditText.text.toString()
@@ -45,6 +46,12 @@ class LoginActivity : AppCompatActivity() {
     private fun initHome(){
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
+    }
+    private fun loggedInStatus(){
+        if (auth.currentUser != null){
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }
     }
     private fun initRegister(){
         val intent = Intent(this, SignUp::class.java)
