@@ -21,6 +21,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "WEB_KEY", SERVER_KEY
+        }
+        debug {
+            buildConfigField "String", "WEB_KEY", SERVER_KEY
         }
     }
 
@@ -34,6 +38,13 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     //Firebase auth
     implementation 'com.google.firebase:firebase-auth-ktx:19.4.0'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    // Core Coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
+    // Coroutines for android
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
+    //Coroutine for firebase
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
     //Material design
     implementation 'com.google.android.material:material:1.2.1'
     testImplementation 'junit:junit:4.13'

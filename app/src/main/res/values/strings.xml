@@ -18,4 +18,6 @@
     <string name="logine_error">Login Failure</string>
     <string name="logout">Logout</string>
     <string name="login_success">Login Success</string>
+    <string name="success_login">LoggedIn Successfully</string>
+    <string name="google_signin">Google SignIn</string>
 </resources>
