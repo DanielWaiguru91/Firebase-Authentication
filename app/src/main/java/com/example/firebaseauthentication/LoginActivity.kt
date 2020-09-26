@@ -35,11 +35,16 @@ class LoginActivity : AppCompatActivity() {
         }
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-
+                Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
+                initHome()
             }
             .addOnFailureListener {
                 Toast.makeText(this, getString(R.string.logine_error), Toast.LENGTH_SHORT).show()
             }
+    }
+    private fun initHome(){
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish()
     }
     private fun initRegister(){
         val intent = Intent(this, SignUp::class.java)

@@ -17,4 +17,5 @@
     <string name="join">New User? Join</string>
     <string name="logine_error">Login Failure</string>
     <string name="logout">Logout</string>
+    <string name="login_success">Login Success</string>
 </resources>
