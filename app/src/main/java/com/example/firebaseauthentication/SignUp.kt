@@ -3,6 +3,7 @@ package com.example.firebaseauthentication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.EditText
 import android.widget.Toast
@@ -26,6 +27,12 @@ class SignUp : AppCompatActivity() {
             userSignUpValidate()
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        //updateUI(currentUser)
+    }
     private fun userSignUpValidate(){
         if (etEmail.text.toString().isEmpty()){
             etEmail.error = "Email is required"
@@ -47,23 +54,22 @@ class SignUp : AppCompatActivity() {
         val passwordTxt = findViewById<EditText>(R.id.etPassword)
         val email = emailTxt.text.toString()
         val password = passwordTxt.text.toString()
-        if (email.isNotEmpty() && password.isNotEmpty()){
-            auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful){
-                        val user = auth.currentUser
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful){
+                    //val user = auth.currentUser
 
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                        //                    val  user = auth.currentUser
-                        //                    updateUI(user)
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish()
+                    //                    val  user = auth.currentUser
+                    //                    updateUI(user)
+                    Log.i("Main", "User created with id ${task.result?.user?.uid}")
 
-                    } else{
-                        Toast.makeText(baseContext, "Authentication failed!", Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(baseContext, "Authentication failed!", Toast.LENGTH_SHORT).show()
 
-                    }
                 }
-        }
+            }
     }
 
 }
