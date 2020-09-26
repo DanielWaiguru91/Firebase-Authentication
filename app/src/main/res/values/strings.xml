@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Firebase Authentication</string>
+    <string name="login">Have an Account? Sign In</string>
+    <string name="username">Username</string>
+    <string name="create_account">Create Account</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="submit">Submit</string>
+    <string name="sign_in_to_continue">Sign In to Continue</string>
+    <string name="email_error">Email is required</string>
+    <string name="password_error">Password is Required</string>
+    <string name="not_match_error">Password Do Not Match</string>
 </resources>

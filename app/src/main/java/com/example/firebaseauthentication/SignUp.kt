@@ -11,7 +11,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_sign_up.emailEditText
+import kotlinx.android.synthetic.main.activity_sign_up.passwordEditText
 
 class SignUp : AppCompatActivity() {
     private lateinit var auth : FirebaseAuth
@@ -27,49 +30,26 @@ class SignUp : AppCompatActivity() {
             userSignUpValidate()
         }
     }
-
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        //updateUI(currentUser)
-    }
-    private fun userSignUpValidate(){
-        if (etEmail.text.toString().isEmpty()){
-            etEmail.error = "Email is required"
-            etEmail.requestFocus()
-            //cancel user sign up in case of error
+    private fun signUp(){
+        
+        if (emailEditText.text.toString().isEmpty()){
+            emailEditText.error = getString(R.string.email_error)
+            emailEditText.requestFocus()
             return
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(etEmail.text.toString()).matches()){
-            etEmail.error = "Enter a valid email"
-            etEmail.requestFocus()
+        if (passwordEditText.text.toString().isEmpty()){
+            passwordEditText.error = getString(R.string.password_error)
+            passwordEditText.requestFocus()
             return
         }
-        if (etPassword.text.toString().isEmpty()){
-            etPassword.error = "Password is required"
-            etPassword.requestFocus()
+        if (cPasswordEditText.text.toString().isEmpty()){
+            cPasswordEditText.error = getString(R.string.not_match_error)
+            cPasswordEditText.requestFocus()
             return
+        } else if (cPasswordEditText.text.toString() != passwordEditText.text.toString()){
+            cPasswordEditText.error = getString(R.string.not_match_error)
         }
-        val emailTxt = findViewById<EditText>(R.id.etEmail)
-        val passwordTxt = findViewById<EditText>(R.id.etPassword)
-        val email = emailTxt.text.toString()
-        val password = passwordTxt.text.toString()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful){
-                    //val user = auth.currentUser
 
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                    //                    val  user = auth.currentUser
-                    //                    updateUI(user)
-                    Log.i("Main", "User created with id ${task.result?.user?.uid}")
-
-                } else{
-                    Toast.makeText(baseContext, "Authentication failed!", Toast.LENGTH_SHORT).show()
-
-                }
-            }
     }
 
 }
