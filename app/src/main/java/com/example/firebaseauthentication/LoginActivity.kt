@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firebaseauthentication.auth.auth
+import com.example.firebaseauthentication.common.REQUEST_CODE
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -66,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
         val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
         googleSignInClient.signInIntent.also {
-            startActivityForResult(it, 0)
+            startActivityForResult(it, REQUEST_CODE)
         }
     }
     private fun loggedInStatus(){
@@ -83,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0){
+        if (requestCode == REQUEST_CODE){
             val account = GoogleSignIn.getSignedInAccountFromIntent(data).result
             account?.let { getAccountCredentials(it) }
         }
@@ -94,6 +95,7 @@ class LoginActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 auth.signInWithCredential(authCredentials).await()
+                //initHome()
                 withContext(Dispatchers.Main){
                     Toast
                         .makeText(this@LoginActivity,
