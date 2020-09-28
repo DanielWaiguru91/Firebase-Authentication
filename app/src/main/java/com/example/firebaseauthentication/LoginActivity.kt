@@ -4,8 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.firebaseauthentication.auth.auth
-import com.example.firebaseauthentication.common.REQUEST_CODE
+import com.example.firebaseauthentication.common.Constants.REQUEST_CODE
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -61,14 +60,14 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun googleSignIn(){
         val token = BuildConfig.WEB_KEY
-        val googleSignInOptions = GoogleSignInOptions.Builder()
+        val googleSignInOptions = GoogleSignInOptions
+            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(token)
             .requestEmail()
             .build()
         val googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
-        googleSignInClient.signInIntent.also {
-            startActivityForResult(it, REQUEST_CODE)
-        }
+        val intent = googleSignInClient.signInIntent
+        startActivityForResult(intent, REQUEST_CODE)
     }
     private fun loggedInStatus(){
         if (auth.currentUser != null){

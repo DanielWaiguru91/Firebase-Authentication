@@ -1,4 +1,4 @@
-package com.example.firebaseauthentication.auth
+package com.example.firebaseauthentication
 
 import com.google.firebase.auth.FirebaseAuth
 

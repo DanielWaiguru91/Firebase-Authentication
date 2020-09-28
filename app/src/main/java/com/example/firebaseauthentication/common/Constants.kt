@@ -1,3 +1,5 @@
 package com.example.firebaseauthentication.common
 
-const val REQUEST_CODE = 0
+object Constants{
+    const val REQUEST_CODE = 0
+}
